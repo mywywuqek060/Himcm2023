@@ -1,23 +1,19 @@
-# 完整的代码，包括之前的参数调整和新的需求实现
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter
 
-# 设置模型参数
-seed_production = 50  # 每个蒲公英每月产生的种子数量
-dispersion_std_dev = 1.3  # 增加扩散的标准差
-germination_rate = 0.02  # 种子萌发率
-grid_size = 16  # 网格大小为16x16
-wind_direction_bias = (3, 3)  # 增加风的影响
+seed_production = 50
+dispersion_std_dev = 1.3
+germination_rate = 0.02
+grid_size = 16
+wind_direction_bias = (3, 3)
 
 # 初始化网格
 grid = np.zeros((grid_size, grid_size))
-grid[grid_size // 2, grid_size // 2] = 1  # 在中心放置一个蒲公英
+grid[grid_size // 2, grid_size // 2] = 1
 
-# 定义模拟蒲公英扩散的函数
 def simulate_dandelion_spread_with_wind(grid, months, wind_bias):
-    max_grid = grid.copy()  # 用于记录最大值，确保颜色不变浅
+    max_grid = grid.copy()  # 用于记录最大值，确保颜色不变浅 - 这个有问题，by mywywuqek060 2023.11.17
     for _ in range(months):
         current_dandelions = np.sum(grid)
         new_seeds = current_dandelions * seed_production
@@ -35,15 +31,14 @@ def simulate_dandelion_spread_with_wind(grid, months, wind_bias):
 
     return max_grid
 
-# 生成蓝色系热力图
 months = [1, 2, 3, 6, 12]
 fig, axes = plt.subplots(1, len(months), figsize=(20, 4))
 
 for i, month in enumerate(months):
     spread_grid = simulate_dandelion_spread_with_wind(grid.copy(), month, wind_direction_bias)
     axes[i].imshow(spread_grid, cmap='Blues', interpolation='nearest', extent=[0, grid_size, 0, grid_size])
-
-    # 添加黑色的网格线
+    
+#costumize效果
     axes[i].grid(which='major', axis='both', linestyle='-', color='black', linewidth=0.5)
     axes[i].set_xticks(np.arange(0, grid_size, 1))
     axes[i].set_yticks(np.arange(0, grid_size, 1))

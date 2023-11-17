@@ -12,7 +12,7 @@ Ai = 1.3  # 动物的恒定正面影响
 Cf = 1.2  # 气候因子（温带为1.0) 越高越好 
 seasonal_factors = [1.1, 1.1, 1.1, 1.1, 1.0, 1.0, 1.0, 1.0, 1.1, 1.1, 1.1, 1.1]  
 
-# 定义湿度和竞争特性
+# 定义湿度和竞争特性 这部分有点儿玄学 但是图好看 于是就不改了 by mywywuqek060 2023.11.17
 humidity_distribution = {'L': 0.2, 'M': 0.6, 'H': 0.2}  # 出现低中高湿度的概率
 competition_distribution = {'L': 0.3, 'M': 0.4, 'H': 0.3}  # 出现低中高竞争的概率
 
@@ -65,7 +65,7 @@ plt.legend(loc='upper left')
 plt.grid(True)
 plt.show()
 
-# Calculate confidence intervals for each month
+# 计算每个月不同可能性区间的值域
 confidence_intervals = {
     'Month': months,
     'Median': np.median(monthly_populations, axis=0),
@@ -77,7 +77,7 @@ confidence_intervals = {
     '50% Upper': percentile_50[1, :],
 }
 
-# Print the results for each month
+# 打印结果 但是这个有问题 必须把图片关了之后才能显示打印的结果 应该是matplotlib库的问题 by mywywuqek060 2023.11.17
 print("Month\tMedian\t90% Lower\t90% Upper\t75% Lower\t75% Upper\t50% Lower\t50% Upper")
 for month in months:
     print(f"{int(month)}\t{confidence_intervals['Median'][int(month)]:.2f}\t{confidence_intervals['90% Lower'][int(month)]:.2f}\t{confidence_intervals['90% Upper'][int(month)]:.2f}\t{confidence_intervals['75% Lower'][int(month)]:.2f}\t{confidence_intervals['75% Upper'][int(month)]:.2f}\t{confidence_intervals['50% Lower'][int(month)]:.2f}\t{confidence_intervals['50% Upper'][int(month)]:.2f}")
